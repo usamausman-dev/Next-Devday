@@ -10,3 +10,10 @@ const userSchema = new Schema({
 
 const Users = models.user || model('user', userSchema);
 export default Users
+
+const projectSchema = new Schema({
+    projectAdmin: String,
+    projectName: String
+})
+
+export const Project = models.project || model('project', projectSchema)
