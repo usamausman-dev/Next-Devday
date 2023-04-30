@@ -5,6 +5,8 @@ import Users from "../../../../model/Schema";
 export default async function handler(req, res) {
     connectMongo().catch(error => res.json({ error: "Connection failed" }))
 
+    console.log(req.body)
+
     if (req.method === 'POST') {
         if (!req.body) return res.status(404).json({ error: 'Dont Have form Data' })
         const { firstname, lastname, organization, email, password } = req.body;

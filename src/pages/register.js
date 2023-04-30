@@ -31,16 +31,21 @@ const Register = () => {
             email: values.email,
             password: values.password
         }
+        const headers = {
+            'Content-Type': 'application/json',
+        }
 
-        axios.post('/api/auth/signup', payload)
+        axios.post('/api/auth/signup', payload, {
+            headers: headers
+        })
             .then(function (response) {
-                console.log(response);
+                if (response.status === 201) {
+                    alert("Register Successful")
+                }
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
-
-
 
     }
     return (
