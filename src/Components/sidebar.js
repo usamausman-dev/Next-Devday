@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { MdArrowBackIosNew } from 'react-icons/md'
 import { HiUser } from 'react-icons/hi'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const Sidebar = () => {
 
@@ -48,7 +49,7 @@ const Sidebar = () => {
                 })}
 
 
-                <li className="group text-slate-50 text-sm flex items-center gap-x-4 cursor-pointer  p-2 hover:bg-light-white rounded-md fixed bottom-5">
+                <li onClick={() => signOut({ callbackUrl: '/login' })} className="group text-slate-50 text-sm flex items-center gap-x-4 cursor-pointer  p-2 hover:bg-light-white rounded-md fixed bottom-5">
                     <i className="fa-solid fa-right-from-bracket"></i>
                     <span
                         className={`${!open && 'opacity-0 translate-x-28 overflow-hidden'} whitespace-pre origin-left duration-500 hover:text-[#72c179] hover:font-semibold`}>
