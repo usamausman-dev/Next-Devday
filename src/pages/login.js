@@ -20,7 +20,6 @@ function Login() {
     });
 
     async function onSubmit(values) {
-        // console.log(values)
         const status = await signIn('credentials', {
             redirect: false,
             email: values.email,
@@ -28,7 +27,7 @@ function Login() {
             callbackUrl: '/'
         })
 
-        if(status.ok)router.push(status.url)
+        if (status.ok) router.push(status.url)
     }
 
 

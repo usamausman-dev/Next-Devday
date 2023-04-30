@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi'
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react'
+import axios from 'axios';
 
 const Register = () => {
 
@@ -14,15 +15,32 @@ const Register = () => {
             email: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            organizationName: ''
         },
         onSubmit,
         validate: register_validation
     });
 
     async function onSubmit(values) {
-        
-        console.log(values)
+
+        const payload = {
+            firstname: values.firstName,
+            lastname: values.lastName,
+            organization: values.organizationName,
+            email: values.email,
+            password: values.password
+        }
+
+        axios.post('/api/auth/signup', payload)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
 
     }
     return (
@@ -52,6 +70,14 @@ const Register = () => {
                                 <div className={formik.errors.lastName && formik.touched.lastName ? "flex border rounded-xl relative border-red-700 " : "flex border rounded-xl relative"}>
                                     <input className="w-full py-4 px-6 rounded-xl bg-transparent focus:outline-none border-none peer" type='text' name='lastName' placeholder='Last Name'
                                         {...formik.getFieldProps('lastName')}
+                                    />
+                                    <span className='icon flex items-center px-4 peer-focus:text-orange-500'>  <HiUser size={25} /></span>
+                                </div>
+
+
+                                <div className={formik.errors.organizationName && formik.touched.organizationName ? "flex border rounded-xl relative border-red-700 " : "flex border rounded-xl relative"}>
+                                    <input className="w-full py-4 px-6 rounded-xl bg-transparent focus:outline-none border-none peer" type='text' name='lastName' placeholder='Organization Name'
+                                        {...formik.getFieldProps('organizationName')}
                                     />
                                     <span className='icon flex items-center px-4 peer-focus:text-orange-500'>  <HiUser size={25} /></span>
                                 </div>
