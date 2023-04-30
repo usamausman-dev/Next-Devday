@@ -34,7 +34,8 @@ export default function AddProject() {
 
         const payload = {
             projectAdmin: session.user.email,
-            projectName: project
+            projectName: project,
+            members: [session.user.email],
         }
 
 
@@ -46,7 +47,7 @@ export default function AddProject() {
                 }
             })
             .catch(function (error) {
-                console.log(error.response);
+                alert(error.response);
             });
     }
 

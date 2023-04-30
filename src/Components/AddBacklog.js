@@ -4,12 +4,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import axios from 'axios';
+import { useRouter } from "next/router";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AddBacklog() {
+export default function AddBacklog({ ProjectID }) {
 
     let status = ['open', 'In Progress', 'closed']
 
@@ -19,6 +21,7 @@ export default function AddBacklog() {
     const [nature, setNature] = useState('')
     const [startdate, setStartDate] = useState(new Date())
     const [enddate, setEndDate] = useState(new Date())
+    const router = useRouter();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -31,8 +34,21 @@ export default function AddBacklog() {
 
     function AddBacklogHandler() {
 
-        let payload = { name, nature, startdate, enddate, projectStatus, person: "" }
+        let payload = { ProjectID, name, nature, startdate, enddate, projectStatus, person: "" }
         console.log(payload)
+
+        axios.post('/api/createtask', payload)
+            .then(function (response) {
+                if (response.status === 201) {
+                    setOpen(false);
+                    router.reload();
+
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
+
     }
 
     return (

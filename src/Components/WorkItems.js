@@ -1,9 +1,7 @@
 import React from 'react'
-// import { Link } from 'react-router-dom'
-// import AddWorkItem from '../components/AddWorkItem'
 import AddWorkItem from './AddWorkItem'
 
-const Workitems = () => {
+const Workitems = ({ ProjectID }) => {
     return (
         <div className='bg-slate-900 p-2'>
             <div className='flex justify-between items-center border-b-2  p-4 text-white'>

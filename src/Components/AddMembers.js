@@ -5,19 +5,33 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import axios from 'axios';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AddMember() {
+export default function AddMember({ projectdataid }) {
     const [open, setOpen] = React.useState(false);
     const [person, setPerson] = React.useState('');
+    const [members, setMembers] = React.useState([])
 
-    var members = [
-        'uusman004@gmail.com',
-        'babar@gmail.com'
-    ]
+    React.useEffect(() => {
+        axios.get('http://localhost:3000/api/getusers')
+            .then(function (response) {
+                setMembers(response.data.users)
+            }).catch((e) => {
+                console.log(e)
+            })
+
+
+
+    }, [])
+
+    // var members = [
+    //     'uusman004@gmail.com',
+    //     'babar@gmail.com'
+    // ]
 
 
 
@@ -31,7 +45,24 @@ export default function AddMember() {
     };
 
     function AddMemberHandler(e) {
-        console.log("hello", person)
+        e.preventDefault();
+
+        const payload = {
+            person, projectdataid
+        }
+
+
+        axios.post('/api/addmembers', payload)
+            .then(function (response) {
+                if (response.status === 201) {
+                    setOpen(false)
+                    alert('added Successfully')
+                    console.log(response)
+                }
+            })
+            .catch(function (error) {
+                console.log("while getting", error.response);
+            });
     }
 
     return (

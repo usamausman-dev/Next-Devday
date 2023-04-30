@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -12,7 +12,7 @@ import { deepOrange } from '@mui/material/colors';
 import AddMember from '@/Components/AddMembers';
 import Workitems from '@/Components/WorkItems';
 import Backlog from '@/Components/Backlog';
-
+import axios from 'axios';
 
 import Layout from '@/Layout/layout'
 import Head from 'next/head'
@@ -59,18 +59,36 @@ const projectId = () => {
     const router = useRouter()
 
     const [value, setValue] = useState(0);
+    const [members, setMembers] = useState([])
+
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    let members = [
-        'uusman004@gmail.com',
-        'babar@gmail.com',
-        'usmanali@gmail.com',
-        'shahbaz@gmail.com',
-        'anas@gmail.com'
-    ]
+
+
+
+
+    useEffect(() => {
+        if (router.query.projectId) {
+            axios.post('/api/getprojectbyid', { projectId: router.query.projectId })
+                .then(function (response) {
+                    if (response.status === 201) {
+                        setMembers(response.data.data.members)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error.response);
+                });
+        }
+
+
+
+    }, [router.query.projectId])
+
+
+
 
 
     return (
@@ -89,7 +107,7 @@ const projectId = () => {
                             }
                         </AvatarGroup>
                     </div>
-                    <AddMember />
+                    <AddMember projectdataid={router.query.projectId} />
                 </div>
 
 
@@ -104,10 +122,10 @@ const projectId = () => {
                         </Tabs>
                     </Box>
                     <TabPanel value={value} index={0}>
-                        <Workitems />
+                        <Workitems ProjectID={router.query.projectId} />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <Backlog />
+                        <Backlog ProjectID={router.query.projectId} />
                     </TabPanel>
                     {/* <TabPanel value={value} index={2}>
                         <Board />
