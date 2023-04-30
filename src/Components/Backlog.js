@@ -48,7 +48,7 @@ const Backlog = ({ ProjectID }) => {
                         {
                             task.map((val, key) =>
                                 <tr key={key} className='shadow-lg bg-gray-50' >
-                                    <td><small>{val._id}</small></td>
+                                    <td><small>{val._id}g</small></td>
                                     <td>{val.name}</td>
                                     <td>{val.projectStatus}</td>
                                     <td>{val.nature}</td>
