@@ -5,12 +5,19 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import axios from 'axios';
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AddProject() {
+
+    const { data: session } = useSession()
+
+
+
     const [open, setOpen] = React.useState(false);
     const [project, setProject] = React.useState("")
     const handleClickOpen = () => {
@@ -24,7 +31,23 @@ export default function AddProject() {
 
     function AddProjectHandler(e) {
         e.preventDefault();
-        console.log("hello", project)
+
+        const payload = {
+            projectAdmin: session.user.email,
+            projectName: project
+        }
+
+
+        axios.post('/api/createproject', payload)
+            .then(function (response) {
+                if (response.status === 201) {
+                    alert("Project Created Successfully")
+                    setOpen(false)
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
     }
 
     return (

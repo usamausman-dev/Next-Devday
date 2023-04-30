@@ -1,7 +1,8 @@
 import '@/styles/globals.css'
 import Head from 'next/head'
+import { SessionProvider } from "next-auth/react"
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps: { session, ...pageProps }, }) {
   return <>
     <Head>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -9,5 +10,9 @@ export default function App({ Component, pageProps }) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     </Head>
 
-    <Component {...pageProps} /></>
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
+
+  </>
 }
