@@ -9,7 +9,7 @@ const Workitems = ({ ProjectID }) => {
 
     useEffect(() => {
         if (ProjectID) {
-            axios.get(`http://localhost:3000/api/getworkitems?projectID=${ProjectID}`)
+            axios.get(`/api/getworkitems?projectID=${ProjectID}`)
                 .then(function (response) {
                     setWorkItems(response.data.workItems)
                     console.log(response.data.workItems)

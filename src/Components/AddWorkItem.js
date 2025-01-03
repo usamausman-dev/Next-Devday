@@ -25,7 +25,7 @@ export default function AddWorkItem({ projectID, workItems, setWorkItems }) {
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/getusers')
+        axios.get('/api/getusers')
             .then(response => {
                 setMembers(response.data.users);
                 setPerson(response.data.users[0]);

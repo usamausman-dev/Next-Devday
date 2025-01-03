@@ -17,7 +17,7 @@ export default function AddMember({ projectdataid }) {
     const [members, setMembers] = React.useState([])
 
     React.useEffect(() => {
-        axios.get('http://localhost:3000/api/getusers')
+        axios.get('/api/getusers')
             .then(function (response) {
                 setMembers(response.data.users)
             }).catch((e) => {

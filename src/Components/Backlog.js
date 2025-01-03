@@ -10,7 +10,7 @@ const Backlog = ({ ProjectID }) => {
 
     useEffect(() => {
         if (ProjectID) {
-            axios.get(`http://localhost:3000/api/gettasks?projectID=${ProjectID}`)
+            axios.get(`/api/gettasks?projectID=${ProjectID}`)
                 .then(function (response) {
                     setTasks(response.data.tasks)
                     console.log(response.data.tasks)

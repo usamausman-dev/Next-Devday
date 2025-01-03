@@ -14,7 +14,7 @@ const dashboard = () => {
 
   useEffect(() => {
     if (session?.user.id) {
-      axios.get(`http://localhost:3000/api/getOrganizationByuid?createdBy=${session.user.id}`).then((res) => {
+      axios.get(`/api/getOrganizationByuid?createdBy=${session.user.id}`).then((res) => {
         setOrganizations(res.data.organizations)
       })
         .catch(err => console.log(err))
