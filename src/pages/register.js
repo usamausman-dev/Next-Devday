@@ -5,6 +5,7 @@ import { HiAtSymbol, HiFingerPrint, HiUser } from 'react-icons/hi'
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react'
 import axios from 'axios';
+import BgImage from '../../public/bg.jpg'
 
 const Register = () => {
 
@@ -52,15 +53,16 @@ const Register = () => {
         <div className='flex h-screen bg-orange-500'>
             <div className='m-auto bg-slate-50 rounded-md w-3/5  grid lg:grid-cols-2'>
 
-                <div className='sm:hidden rounded  lg:block bg-[url("https://www.systemsltd.com/wp-content/uploads/2019/10/systems-limited-first-half-of-2019-img.jpg")] '>
+                <div className='sm:hidden rounded bg-no-repeat bg-cover  lg:block bg-[url("https://img.freepik.com/free-photo/residential-building-facades-rotterdam-netherlands_181624-29643.jpg?t=st=1735910118~exp=1735913718~hmac=dd81c3b17d118052a301c02e3026a496586a5478b05bf52df18c218a44a63577&w=740")] '>
                 </div>
 
                 <div className='right flex flex-col justify-evenly'>
-                    <div className='text-center py-10'>
+                    <div className='text-center py-5'>
+
                         <section className='w-3/4 mx-auto flex flex-col gap-5'>
                             <div className='title'>
-                                <h1 className='text-gray text-4xl font-bold py-4'>Register</h1>
-                                <p className='w-3/4 mx-auto text-gray-400'>lorem ipsum text goes from here</p>
+                                <h1 className='text-gray text-3xl font-bold'>Register</h1>
+                                <p className='w-3/4 mx-auto text-gray-400'>Register to Start a New Journey With Us</p>
                             </div>
                             <form className='flex flex-col gap-3' onSubmit={formik.handleSubmit}>
 

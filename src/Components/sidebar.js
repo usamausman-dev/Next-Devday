@@ -9,10 +9,10 @@ const Sidebar = () => {
 
     const [open, setOpen] = useState(false);
 
-    const Menus = [
-        { title: "Organizations", link: '/dashboard', icon: 'fa-solid fa-building' },
-        { title: "Projects", link: '/project', icon: 'fa-solid fa-briefcase' },
-    ]
+    // const Menus = [
+    //     { title: "Organizations", link: '/dashboard', icon: 'fa-solid fa-building' },
+    //     { title: "Projects", link: '/project', icon: 'fa-solid fa-briefcase' },
+    // ]
 
     return (
         <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-orange-500 relative`}>
@@ -26,7 +26,7 @@ const Sidebar = () => {
             </div>
 
             <ul className='pt-6'>
-                {Menus.map((menu, index) => {
+                {/* {Menus.map((menu, index) => {
                     return (
                         <Link href={menu.link} key={index}>
                             <li
@@ -46,7 +46,7 @@ const Sidebar = () => {
                             </li>
                         </Link>
                     )
-                })}
+                })} */}
 
 
                 <li onClick={() => signOut({ callbackUrl: '/login' })} className="group text-slate-50 text-sm flex items-center gap-x-4 cursor-pointer  p-2 hover:bg-light-white rounded-md fixed bottom-5">

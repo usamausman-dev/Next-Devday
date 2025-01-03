@@ -26,10 +26,24 @@ export default NextAuth({
 
                 }
 
-                return result;
+                return { email: result.email, id: result._id };
             }
 
         })
-    ]
-
-})
+    ],
+    callbacks: {
+        async jwt({ token, user }) {
+            // Add the user ID to the token if it exists
+            if (user) {
+                token.id = user.id;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            // Add the user ID from the token to the session object
+            session.user.id = token.id;
+            return session;
+        },
+    },
+    secret: process.env.NEXTAUTH_SECRET, // Add your secret here
+});

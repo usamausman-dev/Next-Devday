@@ -7,29 +7,29 @@ import AddProject from '@/Components/AddProject'
 import JoinProject from '@/Components/JoinProject'
 import { useSession, signIn, signOut } from "next-auth/react"
 import axios from 'axios'
+import { useRouter } from 'next/router'
+
 
 const project = () => {
 
     const { data: session } = useSession()
     const [projects, setProjects] = useState([])
+    const router = useRouter()
+
 
 
     useEffect(() => {
-        if (session?.user.email) {
-            axios.post('/api/fetchprojects', { projectAdmin: session.user.email })
+        if (router.query.OrganizationId) {
+            axios.get(`/api/getOrganization?id=${router.query.OrganizationId}`)
                 .then(function (response) {
-                    if (response.status === 201) {
-                        setProjects(response.data.data)
-                        console.log(response.data.data)
-                    }
+                    setProjects(response.data.data.projects)
+                    console.log(response.data.data.projects)
                 })
                 .catch(function (error) {
                     console.log(error.response);
                 });
-
         }
-
-    }, [session])
+    }, [router.query.OrganizationId])
 
     return (
         <Layout>
@@ -37,13 +37,12 @@ const project = () => {
                 <title>Projects</title>
             </Head>
 
-            <div className='p-10'>
+            <div className='p-10  w-full'>
 
                 <div className='flex justify-between'>
-                    <h1 className='text-bold text-3xl'>Projects </h1>
+                    <h1 className='font-bold text-3xl'><Link href='/dashboard'>{router.query.OrganizationId}</Link>/Projects </h1>
                     <div className='flex gap-3'>
-                        <JoinProject />
-                        <AddProject />
+                        <AddProject setProjects={setProjects} projects={projects} OrganizationId={router.query.OrganizationId} />
                     </div>
 
 

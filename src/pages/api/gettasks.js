@@ -5,8 +5,13 @@ export default async function handler(req, res) {
     connectMongo().catch(error => res.json({ error: "Connection failed" }))
 
     if (req.method === 'GET') {
+        const { projectID } = req.query;
 
-        const tasks = await Task.find();
+        if (!projectID) {
+            res.status(422).json({ message: "Project ID missing" })
+        }
+
+        const tasks = await Task.find({ projectID });
         if (tasks) {
             res.status(201).json({ status: true, tasks: tasks })
         }

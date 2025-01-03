@@ -36,7 +36,7 @@ function Login() {
         <div className='flex h-screen bg-orange-500'>
             <div className='m-auto bg-slate-50 rounded-md w-3/5  grid lg:grid-cols-2'>
 
-                <div className='sm:hidden rounded  lg:block bg-[url("https://www.systemsltd.com/wp-content/uploads/2019/10/systems-limited-first-half-of-2019-img.jpg")] '>
+                <div className='sm:hidden rounded bg-cover bg-no-repeat  lg:block bg-[url("https://img.freepik.com/free-photo/residential-building-facades-rotterdam-netherlands_181624-29643.jpg?t=st=1735910118~exp=1735913718~hmac=dd81c3b17d118052a301c02e3026a496586a5478b05bf52df18c218a44a63577&w=740")] '>
                 </div>
 
                 <div className='right flex flex-col justify-evenly'>

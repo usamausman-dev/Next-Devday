@@ -1,27 +1,28 @@
 import connectMongo from "../../../database/conn";
 import { Project } from "../../../model/Schema";
-import mongoose from "mongoose";
 
 export default async function handler(req, res) {
-    connectMongo().catch(error => res.json({ error: "Connection failed" }))
+    await connectMongo().catch(error => res.status(500).json({ error: "Connection failed" }));
 
-    if (req.method === 'POST') {
-        if (!req.body) return res.status(404).json({ error: 'Dont Have form Data' })
-        console.log("Yehh", req.body)
-        const { projectId } = req.body
+    if (req.method === 'GET') {
+        const { projectId } = req.query; // Extract projectId from query parameters
 
-
-        const checkExisting = await Project.findOne({ _id: projectId })
-        if (checkExisting) {
-            res.status(201).json({ status: true, data: checkExisting })
+        if (!projectId) {
+            return res.status(400).json({ error: "Project ID is required" });
         }
-        else {
-            res.status(201).json({ status: true, data: "" })
 
+        try {
+            const checkExisting = await Project.findById(projectId);
+
+            if (checkExisting) {
+                return res.status(200).json({ status: true, data: checkExisting });
+            } else {
+                return res.status(404).json({ status: false, data: null, message: "Project not found" });
+            }
+        } catch (error) {
+            return res.status(500).json({ status: false, error: "Internal Server Error", details: error.message });
         }
-    }
-
-    else {
-        res.status(500).json({ message: "HTTP Method not valid only POST Accepted" })
+    } else {
+        return res.status(405).json({ message: "HTTP Method not valid. Only GET is accepted." });
     }
 }

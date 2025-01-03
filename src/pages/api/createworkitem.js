@@ -1,5 +1,5 @@
 import connectMongo from "../../../database/conn";
-import { Task } from "../../../model/Schema";
+import { WorkItem } from "../../../model/Schema";
 
 export default async function handler(req, res) {
     connectMongo().catch(error => res.json({ error: "Connection failed" }))
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         console.log(projectID, name, nature, startdate, enddate, projectStatus, person)
 
 
-        Task.create({ projectID, name, nature, startdate, enddate, projectStatus, person })
+        WorkItem.create({ projectID, name, nature, startdate, enddate, projectStatus, person })
             .then((data) => {
                 res.status(201).json({ status: true, task: data })
             })

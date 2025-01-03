@@ -7,15 +7,19 @@ const Backlog = ({ ProjectID }) => {
 
     const [task, setTasks] = useState([])
 
+
     useEffect(() => {
-        axios.get('http://localhost:3000/api/getalltasks')
-            .then(function (response) {
-                setTasks(response.data.tasks)
-                console.log(response.data.tasks)
-            }).catch((e) => {
-                console.log(e)
-            })
-    }, [])
+        if (ProjectID) {
+            axios.get(`http://localhost:3000/api/gettasks?projectID=${ProjectID}`)
+                .then(function (response) {
+                    setTasks(response.data.tasks)
+                    console.log(response.data.tasks)
+                }).catch((e) => {
+                    console.log(e)
+                })
+        }
+
+    }, [ProjectID])
 
 
 
@@ -24,7 +28,7 @@ const Backlog = ({ ProjectID }) => {
         <div className='bg-slate-900 p-2'>
             <div className='flex justify-between items-center border-b-2  p-4 text-white'>
                 <div className='text-bold text-xl'>Backlogs </div>
-                <AddBacklog ProjectID={{ ProjectID }} />
+                <AddBacklog projectID={ProjectID} task={task} setTasks={setTasks} />
             </div>
 
             <div>

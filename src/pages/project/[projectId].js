@@ -72,11 +72,9 @@ const projectId = () => {
 
     useEffect(() => {
         if (router.query.projectId) {
-            axios.post('/api/getprojectbyid', { projectId: router.query.projectId })
+            axios.get(`/api/getprojectbyid?projectId=${router.query.projectId}`)
                 .then(function (response) {
-                    if (response.status === 201) {
-                        setMembers(response.data.data.members)
-                    }
+                    setMembers(response.data.data.members)
                 })
                 .catch(function (error) {
                     console.log(error.response);
@@ -101,11 +99,7 @@ const projectId = () => {
                 <div className='flex justify-between mb-5'>
                     <div className='flex items-center '>
                         <div className='text-bold text-3xl mr-6'>Project -  {router.query.projectId} </div>
-                        <AvatarGroup max={4}>
-                            {
-                                members.map((val, key) => <Avatar key={key} sx={{ bgcolor: deepOrange[500] }}>{val.charAt(0).toUpperCase()}</Avatar>)
-                            }
-                        </AvatarGroup>
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{members.length}</Avatar>
                     </div>
                     <AddMember projectdataid={router.query.projectId} />
                 </div>

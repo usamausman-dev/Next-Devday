@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AddBacklog({ ProjectID }) {
+export default function AddBacklog({ projectID, task, setTasks }) {
 
     let status = ['open', 'In Progress', 'closed']
 
@@ -34,14 +34,13 @@ export default function AddBacklog({ ProjectID }) {
 
     function AddBacklogHandler() {
 
-        let payload = { ProjectID, name, nature, startdate, enddate, projectStatus, person: "" }
-        console.log(payload)
+        let payload = { projectID, name, nature, startdate, enddate, projectStatus, person: "" }
 
         axios.post('/api/createtask', payload)
             .then(function (response) {
                 if (response.status === 201) {
                     setOpen(false);
-                    router.reload();
+                    setTasks([...task, response.data.task])
 
                 }
             })

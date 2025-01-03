@@ -9,7 +9,6 @@ const connectMongo = async () => {
     }
 
     catch (error) {
-        console.log(error)
         return Promise.reject(error)
     }
 }
